@@ -25,7 +25,6 @@ setup(
         'librosa',
         'torch',
         'PyWavelets',
-        're'
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
