@@ -1,0 +1,10 @@
+Metadata-Version: 2.1
+Name: eeg-ml-pipeline
+Version: 0.1
+Summary: A Python package for EEG machine learning analysis, classification, and visualization.
+Author: Yossef Emara
+Author-email: emara004@umn.edu
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6

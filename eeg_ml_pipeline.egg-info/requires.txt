@@ -1,0 +1,17 @@
+numpy
+scikit-learn
+pandas>=2.0.0
+scipy
+mne
+matplotlib
+seaborn
+antropy
+featurewiz
+imblearn
+tensorflow
+dask[dataframe]>=2021.9.1
+matplotlib
+pyts
+librosa
+torch
+pywavelet
