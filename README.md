@@ -1,11 +1,14 @@
-EEG Machine Learning Analysis Package
+# EEG Machine Learning Analysis Package
 
-The EEG Machine Learning Analysis Package provides a comprehensive and modular framework for analyzing EEG data using state-of-the-art machine learning techniques. The package includes support for feature extraction, model training, and advanced visualization methods, all seamlessly integrated into the EEGPipeline class.
+The **EEG Machine Learning Analysis Package** provides a comprehensive and modular framework for analyzing EEG data using state-of-the-art machine learning techniques. The package includes support for feature extraction, model training, and advanced visualization methods, all seamlessly integrated into the `EEGPipeline` class.
 
-Quickstart
+---
 
-Example Workflow
+## **Quickstart**
 
+### **Example Workflow**
+
+```python
 # Import your data
 from my_eeg_data import arrays  # Replace with your data loader
 
@@ -29,51 +32,53 @@ pipeline.train_model(
 new_data = np.random.rand(10, 32, 256)  # Example input data
 predictions = pipeline.predict_input(new_data)
 print(predictions)
+```
 
-Getting Started
+---
 
-Installation
+## **Getting Started**
+
+### **Installation**
 
 Clone the repository and install the required dependencies:
-
+```bash
 git clone https://github.com/your-repo/eeg-analysis.git
 cd eeg-analysis
 pip install -r requirements.txt
+```
 
-Requirements
+### **Requirements**
 
-Python 3.8+
+- Python 3.8+
+- NumPy, Pandas
+- scikit-learn
+- TensorFlow
+- PyTorch (for TabNet)
+- pyts (for GAF visualizations)
 
-NumPy, Pandas
+---
 
-scikit-learn
+## **EEGPipeline**
 
-TensorFlow
+The `EEGPipeline` class is the primary interface for performing EEG data analysis. It handles feature extraction, model training, and prediction in a streamlined workflow.
 
-PyTorch (for TabNet)
+### **Initialization**
 
-pyts (for GAF visualizations)
-
-EEGPipeline
-
-The EEGPipeline class is the primary interface for performing EEG data analysis. It handles feature extraction, model training, and prediction in a streamlined workflow.
-
-Initialization
-
+```python
 pipeline = EEGPipeline(data_array, label_array, sampling_rate, channel_names=None)
+```
 
-Parameters
+#### **Parameters**
+- **`data_array`** (`numpy.ndarray`): EEG data array of shape `(epochs, channels, timepoints)`.
+- **`label_array`** (`numpy.ndarray`): Corresponding labels for each epoch.
+- **`sampling_rate`** (`int`): Sampling frequency of the EEG data in Hz.
+- **`channel_names`** (`list`, optional): Names of EEG channels. Defaults to `['channel_0', ..., 'channel_n']`.
 
-data_array (numpy.ndarray): EEG data array of shape (epochs, channels, timepoints).
+---
 
-label_array (numpy.ndarray): Corresponding labels for each epoch.
+### **Core Method: `train_model`**
 
-sampling_rate (int): Sampling frequency of the EEG data in Hz.
-
-channel_names (list, optional): Names of EEG channels. Defaults to ['channel_0', ..., 'channel_n'].
-
-Core Method: train_model
-
+```python
 pipeline.train_model(
     initial_test_size=0.2,
     enable_feature_selection=False,
@@ -86,81 +91,86 @@ pipeline.train_model(
     tabnet_training_epochs=200,
     selected_classifiers=None
 )
+```
 
-Description
-
+#### **Description**
 Trains machine learning models using the specified features and classifiers.
 
-Parameters
+#### **Parameters**
+- **`initial_test_size`** (`float`): Proportion of data for testing (default: `0.2`).
+- **`enable_feature_selection`** (`bool`): Enable feature selection (default: `False`).
+- **`time_features`**, **`frequency_features`**, **`wavelet_features`**, **`fractal_dimensions_features`** (`bool`): Toggle feature domains.
+- **`voting_type`** (`str`): Voting method for ensemble classifiers (`"hard"` or `"soft"`).
+- **`ml_baseline_accuracy`** (`float`): Minimum accuracy threshold for hyperparameter tuning (default: `0.8`).
+- **`tabnet_training_epochs`** (`int`): Training epochs for TabNet classifier (default: `200`).
+- **`selected_classifiers`** (`list`, optional): Classifiers to use (e.g., `['tabnet', 'ml_ensemble']`).
 
-initial_test_size (float): Proportion of data for testing (default: 0.2).
+---
 
-enable_feature_selection (bool): Enable feature selection (default: False).
+### **Prediction**
 
-time_features, frequency_features, wavelet_features, fractal_dimensions_features (bool): Toggle feature domains.
+#### **Method: `predict_input`**
 
-voting_type (str): Voting method for ensemble classifiers ("hard" or "soft").
-
-ml_baseline_accuracy (float): Minimum accuracy threshold for hyperparameter tuning (default: 0.8).
-
-tabnet_training_epochs (int): Training epochs for TabNet classifier (default: 200).
-
-selected_classifiers (list, optional): Classifiers to use (e.g., ['tabnet', 'ml_ensemble']).
-
-Prediction
-
-Method: predict_input
-
+```python
 predictions = pipeline.predict_input(input_data)
+```
 
 Predicts the class of new input data using the trained model.
 
-input_data (numpy.ndarray): New EEG data array of shape (epochs, channels, timepoints).
+- **`input_data`** (`numpy.ndarray`): New EEG data array of shape `(epochs, channels, timepoints)`.
+- **Returns**: Predicted labels.
 
-Returns: Predicted labels.
+---
 
-Feature Extraction
+### **Feature Extraction**
 
-Method: extract_features_from_data
+#### **Method: `extract_features_from_data`**
 
+```python
 features = pipeline.extract_features_from_data(data_array)
+```
 
 Extracts features from raw EEG data based on the configured feature set.
 
-data_array (numpy.ndarray): Raw EEG data array.
+- **`data_array`** (`numpy.ndarray`): Raw EEG data array.
+- **Returns**: Extracted feature array.
 
-Returns: Extracted feature array.
+---
 
-Visualization
+### **Visualization**
 
-Methods: plot_gaf, compute_spectrogram
+#### **Methods: `plot_gaf`, `compute_spectrogram`**
 
+```python
 pipeline.plot_gaf(epoch_to_plot=0, channel_to_plot="Fz")
+```
 
 Generates visualizations like Gramian Angular Field (GAF) images or spectrograms for EEG signals.
 
-Supported Classifiers
+---
 
-gaf: GAF-based CNN.
+## **Supported Classifiers**
 
-tabpfn: TabPFN classifier.
+- **`gaf`**: GAF-based CNN.
+- **`tabpfn`**: TabPFN classifier.
+- **`tabnet`**: TabNet classifier.
+- **`ml_ensemble`**: Traditional ML ensemble classifier.
 
-tabnet: TabNet classifier.
+---
 
-ml_ensemble: Traditional ML ensemble classifier.
+## **Contributing**
 
-Contributing
+1. Fork the repository.
+2. Create a feature branch.
+3. Submit a pull request with detailed explanations.
 
-Fork the repository.
+---
 
-Create a feature branch.
-
-Submit a pull request with detailed explanations.
-
-License
-
+## **License**
 This project is licensed under the MIT License.
 
-Acknowledgments
+---
 
+## **Acknowledgments**
 This package was developed as part of a BCI Initiative to classify EEG data efficiently and effectively.
+
