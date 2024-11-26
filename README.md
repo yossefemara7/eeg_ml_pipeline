@@ -120,7 +120,7 @@ Predicts the class of new input data using the trained model.
 ## **Supported Classifiers**
 
 - **`ml_ensemble`**: Traditional ML ensemble classifier.
-- **`tabpfn`**: TabPFN Pre-Trained classifier.
+- **`tabpfn`**: TabPFN Pre-Trained classifier (Only works on <1000 samples and works best at <100 features).
 - **`tabnet`**: TabNet Pre-Trained classifier.
 - **`gaf`**: GAF-based CNN (Coming Soon).
 - **`rp`**: Recurrence-Plot based CNN (Coming Soon).
