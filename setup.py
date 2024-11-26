@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="eeg_ml_pipeline",
-    version="0.1",  
+    version="0.4",  
     description="A Python package for EEG machine learning analysis, classification, and visualization.",
     author="Yossef Emara",
     author_email="emara004@umn.edu",
