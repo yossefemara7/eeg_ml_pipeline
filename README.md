@@ -1,6 +1,6 @@
 # EEG Machine Learning Analysis Package
 
-The **EEG Machine Learning Analysis Package** provides a comprehensive and modular framework for analyzing EEG data using state-of-the-art machine learning techniques. The package includes support for feature extraction, model training, and advanced visualization methods, all seamlessly integrated into the `EEGPipeline` class.
+The **EEG Machine Learning Pipeline Package** provides a comprehensive framework for analyzing EEG data using machine learning techniques. The package includes support for feature extraction and selection, model training, and advance visualization methods, all integrated into the `EEGPipeline` class.
 
 ---
 
@@ -10,16 +10,14 @@ The **EEG Machine Learning Analysis Package** provides a comprehensive and modul
 
 ```python
 # Import your data
-from my_eeg_data import arrays  # Replace with your data loader
+from my_eeg_data import data_array, label_array, channel_array, SAMPLING_RATE  # Replace with your data loader
 
-# Initialize the pipeline
 pipeline = EEGPipeline(
-    data_array=arrays["ASD"]["Data"],
-    label_array=arrays["ASD"]["Label"],
-    sampling_rate=256
+    data_array=data_array,
+    label_array=label_array,
+    sampling_rate=SAMPLING_RATE
 )
 
-# Train the model
 pipeline.train_model(
     enable_feature_selection=True,
     frequency_features=True,
@@ -28,9 +26,8 @@ pipeline.train_model(
     ml_baseline_accuracy=0.9
 )
 
-# Predict on new data
-new_data = np.random.rand(10, 32, 256)  # Example input data
-predictions = pipeline.predict_input(new_data)
+from my_eeg_data import test_data_array
+predictions = pipeline.predict_input(test_data_array)
 print(predictions)
 ```
 
@@ -40,11 +37,9 @@ print(predictions)
 
 ### **Installation**
 
-Clone the repository and install the required dependencies:
+Install the package via pip:
 ```bash
-git clone https://github.com/your-repo/eeg-analysis.git
-cd eeg-analysis
-pip install -r requirements.txt
+pip install eeg_ml_pipeline
 ```
 
 ### **Requirements**
@@ -53,14 +48,14 @@ pip install -r requirements.txt
 - NumPy, Pandas
 - scikit-learn
 - TensorFlow
-- PyTorch (for TabNet)
-- pyts (for GAF visualizations)
+- PyTorch
+- pyts
 
 ---
 
 ## **EEGPipeline**
 
-The `EEGPipeline` class is the primary interface for performing EEG data analysis. It handles feature extraction, model training, and prediction in a streamlined workflow.
+The `EEGPipeline` class is the primary interface for performing all your EEG data analysis. It handles feature extraction and selection, model training, and prediction in a streamlined workflow.
 
 ### **Initialization**
 
@@ -89,7 +84,7 @@ pipeline.train_model(
     voting_type="hard",
     ml_baseline_accuracy=0.8,
     tabnet_training_epochs=200,
-    selected_classifiers=None
+    selected_classifiers=['tabpfn']
 )
 ```
 
@@ -122,49 +117,16 @@ Predicts the class of new input data using the trained model.
 
 ---
 
-### **Feature Extraction**
-
-#### **Method: `extract_features_from_data`**
-
-```python
-features = pipeline.extract_features_from_data(data_array)
-```
-
-Extracts features from raw EEG data based on the configured feature set.
-
-- **`data_array`** (`numpy.ndarray`): Raw EEG data array.
-- **Returns**: Extracted feature array.
-
----
-
-### **Visualization**
-
-#### **Methods: `plot_gaf`, `compute_spectrogram`**
-
-```python
-pipeline.plot_gaf(epoch_to_plot=0, channel_to_plot="Fz")
-```
-
-Generates visualizations like Gramian Angular Field (GAF) images or spectrograms for EEG signals.
-
----
-
 ## **Supported Classifiers**
 
-- **`gaf`**: GAF-based CNN.
-- **`tabpfn`**: TabPFN classifier.
-- **`tabnet`**: TabNet classifier.
 - **`ml_ensemble`**: Traditional ML ensemble classifier.
+- **`tabpfn`**: TabPFN Pre-Trained classifier.
+- **`tabnet`**: TabNet Pre-Trained classifier.
+- **`gaf`**: GAF-based CNN (Coming Soon).
+- **`rp`**: Recurrence-Plot based CNN (Coming Soon).
 
 ---
 
-## **Contributing**
-
-1. Fork the repository.
-2. Create a feature branch.
-3. Submit a pull request with detailed explanations.
-
----
 
 ## **License**
 This project is licensed under the MIT License.
@@ -172,5 +134,5 @@ This project is licensed under the MIT License.
 ---
 
 ## **Acknowledgments**
-This package was developed as part of a BCI Initiative to classify EEG data efficiently and effectively.
+This package was developed as part of research initiatives to classify EEG data efficiently and effectively.
 
