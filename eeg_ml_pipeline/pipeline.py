@@ -86,7 +86,6 @@ class EEGPipeline:
         - enable_feature_selection: Whether to perform feature selection.
         - time_features, frequency_features, etc.: Toggle different feature types.
         - voting_type: Voting method for ensemble classifiers.
-        - enable_ensemble_machine_learning: Use ensemble ML if enabled.
         - tabnet_training_epochs, gaf_training_epochs: Training epochs for respective models.
         - selected_classifiers: List of classifiers to include ['gaf', 'tabpfn', 'tabnet', 'ml_ensemble'].
         """
